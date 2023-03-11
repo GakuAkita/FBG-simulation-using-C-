@@ -10,27 +10,27 @@
 using namespace std;
 using namespace Eigen;
 
-//•¡‘f”‚ğg‚¤‚±‚ê‚ğ—p‚¢‚éB
+//è¤‡ç´ æ•°ã‚’ä½¿ã†æ™‚ã“ã‚Œã‚’ç”¨ã„ã‚‹ã€‚
 typedef std::complex<double> com;
 
-//’è”‚ğ‚±‚±‚Åˆê‹C‚É’è‹`
-//’PˆÊ
+//å®šæ•°ã‚’ã“ã“ã§ä¸€æ°—ã«å®šç¾©
+//å˜ä½
 const double m = 1e-3;
 const double micro = 1e-6;
 const double nano = pow(0.1,9);
 const double gai = pow(10, 20);
 const double tera = pow(10, 12);
 
-//Às‹üÜ—¦
+//å®Ÿè¡Œå±ˆæŠ˜ç‡
 const double neff = 1.45431806;
-//‰~ü—¦
+//å††å‘¨ç‡
 const double pi = 3.141592653589;
-//Œõ‘¬
+//å…‰é€Ÿ
 const double c = 299792458;
 
-//\‘¢‘Ì‚Ì’è‹`‚Ì‚µ‚©‚½‚ğ‚à‚¤ˆê‰ñ‚â‚ë‚¤‚©B
+//æ§‹é€ ä½“ã®å®šç¾©ã®ã—ã‹ãŸã‚’ã‚‚ã†ä¸€å›ã‚„ã‚ã†ã‹ã€‚
 
-void Sum(vector<vector<double>> *array) {//‚¤‚Ü‚­s‚Á‚Ä‚¢‚é‚©Šm”F‚·‚é‚½‚ß‚Éì‚Á‚½B
+void Sum(vector<vector<double>> *array) {//ã†ã¾ãè¡Œã£ã¦ã„ã‚‹ã‹ç¢ºèªã™ã‚‹ãŸã‚ã«ä½œã£ãŸã€‚
 	double sum = 0;
 	for (int i = 0; i < (* array).at(0).size(); i++) {
 		sum+=(* array).at(0).at(i);
@@ -38,7 +38,7 @@ void Sum(vector<vector<double>> *array) {//‚¤‚Ü‚­s‚Á‚Ä‚¢‚é‚©Šm”F‚·‚é‚½‚ß‚Éì‚Á‚
 	cout << sum << endl;
 }
 
-void SumoneD(vector<double>* array) {//‚¤‚Ü‚­s‚Á‚Ä‚¢‚é‚©Šm”F‚·‚é‚½‚ß‚Éì‚Á‚½B
+void SumoneD(vector<double>* array) {//ã†ã¾ãè¡Œã£ã¦ã„ã‚‹ã‹ç¢ºèªã™ã‚‹ãŸã‚ã«ä½œã£ãŸã€‚
 	double sum = 0;
 	for (int i = 0; i < (*array).size(); i++) {
 		sum += (*array).at(i);
@@ -47,23 +47,23 @@ void SumoneD(vector<double>* array) {//‚¤‚Ü‚­s‚Á‚Ä‚¢‚é‚©Šm”F‚·‚é‚½‚ß‚Éì‚Á‚½B
 }
 
 
-//’Pˆê”g’·‚É”½Ë—¦‚ğŒvZ‚·‚é‚½‚ß‚ÌŠÖ”Bwave‚ª”g’·BmainŠÖ”‚Å‚ ‚Æ‚Í‰ñ‚¹‚Î—Ç‚¢
+//å˜ä¸€æ³¢é•·ã«åå°„ç‡ã‚’è¨ˆç®—ã™ã‚‹ãŸã‚ã®é–¢æ•°ã€‚waveãŒæ³¢é•·ã€‚mainé–¢æ•°ã§ã‚ã¨ã¯å›ã›ã°è‰¯ã„
 double Refl(double* wave, vector<double>* sections, double* q) {
-	//for•¶‚ÌŠO‚Éo‚³‚È‚¢‚Æ‚¾‚ß‚È‚Ì‚©B
+	//foræ–‡ã®å¤–ã«å‡ºã•ãªã„ã¨ã ã‚ãªã®ã‹ã€‚
 	Matrix2cd R;
-	//Å‰‚Í’PˆÊs—ñ
+	//æœ€åˆã¯å˜ä½è¡Œåˆ—
 	R << com(1, 0), com(0, 0),
 		com(0, 0), com(1, 0);
-	for (int i = 0; i < (*sections).size(); i++) {//i‚Ì‰ñ”‚ğ’²®‚µ‚Ä‚İ‚éB
-		//Šiq’è”‚ğØ‚èŒˆ‚ß
+	for (int i = 0; i < (*sections).size(); i++) {//iã®å›æ•°ã‚’èª¿æ•´ã—ã¦ã¿ã‚‹ã€‚
+		//æ ¼å­å®šæ•°ã‚’å€Ÿã‚Šæ±ºã‚
 		double dk = (*sections).at(i);
 
-		//ƒÂƒÀ‚ğŒvZ
+		//Î´Î²ã‚’è¨ˆç®—
 		double delbeta = 2 * pi * neff / *wave - pi / dk;
-		//s^2‚ğŒvZ
+		//s^2ã‚’è¨ˆç®—
 		double s2 = pow(*q, 2) - pow(delbeta, 2);
 
-		//‚ `‚±‚ês2<0‚ªŠÔˆá‚Á‚Ä‚¢‚é‚í‚½‚Ô‚ñBs2>0‚Í‚¿‚á‚ñ‚Æ‚Å‚«‚Ä‚¢‚é‚Í‚¸B
+		//ã‚ï½ã“ã‚Œs2<0ãŒé–“é•ã£ã¦ã„ã‚‹ã‚ãŸã¶ã‚“ã€‚s2>0ã¯ã¡ã‚ƒã‚“ã¨ã§ãã¦ã„ã‚‹ã¯ãšã€‚
 		//cout << s2 << endl;
 
 		if (s2 > 0) {
@@ -87,9 +87,9 @@ double Refl(double* wave, vector<double>* sections, double* q) {
 
 
 
-//2ŸŒ³”z—ñ‚ğæ‚è‚ŞBƒR[ƒh‚Ì“à—e‚Í‚¿‚á‚ñ‚Æ—‰ğ‚µ‚Ä‚¢‚È‚¢B‚Å‚àdouble‚Åæ‚è‚Ş‚Å‚«‚éB
+//2æ¬¡å…ƒé…åˆ—ã‚’å–ã‚Šè¾¼ã‚€ã€‚ã‚³ãƒ¼ãƒ‰ã®å†…å®¹ã¯ã¡ã‚ƒã‚“ã¨ç†è§£ã—ã¦ã„ãªã„ã€‚ã§ã‚‚doubleã§å–ã‚Šè¾¼ã‚€ã§ãã‚‹ã€‚
 //https://cplusplus.com/forum/general/233338/
-vector<double> readCSV(string filename)//1s‚¾‚¯æ‚éê‡Bˆø”‚ğ’²®‚·‚ê‚Î2ŸŒ³‚É‚à‚Å‚«‚éB
+vector<double> readCSV(string filename)//1è¡Œã ã‘å–ã‚‹å ´åˆã€‚å¼•æ•°ã‚’èª¿æ•´ã™ã‚Œã°2æ¬¡å…ƒã«ã‚‚ã§ãã‚‹ã€‚
 {
 	vector<vector<double>> M;
 
@@ -110,16 +110,16 @@ vector<double> readCSV(string filename)//1s‚¾‚¯æ‚éê‡Bˆø”‚ğ’²®‚·‚ê‚Î2ŸŒ³‚
 }
 
 
-//2ŸŒ³”z—ñ‚ğcsv‚Éo—Í
-//Ql•¶Œ£«
+//2æ¬¡å…ƒé…åˆ—ã‚’csvã«å‡ºåŠ›
+//å‚è€ƒæ–‡çŒ®â†“
 //https://qiita.com/sakakibarakiaki/items/710aa9407411a06d1067
 void write(vector<vector<double>>* data,const double *length,double *q,double *num) {
-	cout << fixed << setprecision(25);//‚Í‚½‚µ‚Ä‚±‚ê‚ÉˆÓ–¡‚ª‚ ‚é‚©‚Í‚í‚©‚ç‚È‚¢B
-	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ƒ‚[ƒhŒ‹‡—˜_/CSVs/";// ‘‚«o‚µæ
+	cout << fixed << setprecision(25);//ã¯ãŸã—ã¦ã“ã‚Œã«æ„å‘³ãŒã‚ã‚‹ã‹ã¯ã‚ã‹ã‚‰ãªã„ã€‚
+	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ãƒ¢ãƒ¼ãƒ‰çµåˆç†è«–/CSVs/";// æ›¸ãå‡ºã—å…ˆ
 	
-	//csv‚Ì–¼‘O‚ğŒˆ’èB‚È‚ñ‚©‚à‚Á‚Æpython‚İ‚½‚¢‚ÉŠy‚É•¶š—ñ‚ğ‚Â‚È‚°‚é•û–@‚È‚¢‚©‚ÈH
+	//csvã®åå‰ã‚’æ±ºå®šã€‚ãªã‚“ã‹ã‚‚ã£ã¨pythonã¿ãŸã„ã«æ¥½ã«æ–‡å­—åˆ—ã‚’ã¤ãªã’ã‚‹æ–¹æ³•ãªã„ã‹ãªï¼Ÿ
 	path.append("L");
-	path.append(to_string((int)(*length * 1000)));//FBG‚Ì’·‚³‚ğw’è
+	path.append(to_string((int)(*length * 1000)));//FBGã®é•·ã•ã‚’æŒ‡å®š
 	path.append("_");
 	path.append("q");
 	path.append(to_string((int)*q));
@@ -128,7 +128,7 @@ void write(vector<vector<double>>* data,const double *length,double *q,double *n
 	path.append(to_string((int) * num));
 	path.append(".csv");
 
-	std::ofstream ofs(path);// ‘‚«o‚µ—pƒXƒgƒŠ[ƒ€
+	std::ofstream ofs(path);// æ›¸ãå‡ºã—ç”¨ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	if (ofs) {
 		for (size_t i = 0; i < (*data).size(); i++) {
 			for (size_t j = 0; j < (*data).at(i).size(); j++) ofs << (*data).at(i).at(j) << ",";
@@ -138,9 +138,9 @@ void write(vector<vector<double>>* data,const double *length,double *q,double *n
 }
 
 void writeString(vector<vector<double>>* data) {
-	//cout << fixed << setprecision(25);//‚Í‚½‚µ‚Ä‚±‚ê‚ÉˆÓ–¡‚ª‚ ‚é‚©‚Í‚í‚©‚ç‚È‚¢B
-	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ƒ‚[ƒhŒ‹‡—˜_/sample.csv";// ‘‚«o‚µæ
-	std::ofstream ofs(path);// ‘‚«o‚µ—pƒXƒgƒŠ[ƒ€
+	//cout << fixed << setprecision(25);//ã¯ãŸã—ã¦ã“ã‚Œã«æ„å‘³ãŒã‚ã‚‹ã‹ã¯ã‚ã‹ã‚‰ãªã„ã€‚
+	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ãƒ¢ãƒ¼ãƒ‰çµåˆç†è«–/sample.csv";// æ›¸ãå‡ºã—å…ˆ
+	std::ofstream ofs(path);// æ›¸ãå‡ºã—ç”¨ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	if (ofs) {
 		for (size_t i = 0; i < (*data).size(); i++) {
 			for (size_t j = 0; j < (*data).at(i).size(); j++) ofs << (double)((*data).at(i).at(j)) << ",";
@@ -150,9 +150,9 @@ void writeString(vector<vector<double>>* data) {
 }
 
 void writeoneD(vector<double>* data) {
-	//cout << fixed << setprecision(25);//‚Í‚½‚µ‚Ä‚±‚ê‚ÉˆÓ–¡‚ª‚ ‚é‚©‚Í‚í‚©‚ç‚È‚¢B
-	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ƒ‚[ƒhŒ‹‡—˜_/write1D.csv";// ‘‚«o‚µæ
-	std::ofstream ofs(path);// ‘‚«o‚µ—pƒXƒgƒŠ[ƒ€
+	//cout << fixed << setprecision(25);//ã¯ãŸã—ã¦ã“ã‚Œã«æ„å‘³ãŒã‚ã‚‹ã‹ã¯ã‚ã‹ã‚‰ãªã„ã€‚
+	std::string path = "C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ãƒ¢ãƒ¼ãƒ‰çµåˆç†è«–/write1D.csv";// æ›¸ãå‡ºã—å…ˆ
+	std::ofstream ofs(path);// æ›¸ãå‡ºã—ç”¨ã‚¹ãƒˆãƒªãƒ¼ãƒ 
 	if (ofs) {
 		for (size_t i = 0; i < (*data).size(); i++) {
 			ofs << (double)((*data).at(i)) << ",";
@@ -161,26 +161,26 @@ void writeoneD(vector<double>* data) {
 }
 
 
-//ˆÊ‘Šƒ}ƒXƒN‚Ì\‘¢‘Ì(‚â‚Á‚Ï‚â‚ß‚é)
+//ä½ç›¸ãƒã‚¹ã‚¯ã®æ§‹é€ ä½“(ã‚„ã£ã±ã‚„ã‚ã‚‹)
 
 int main() {
 	//cout << fixed << setprecision(25);
 
-	//ˆÊ‘Šƒ}ƒXƒN‚Ì’·‚³
+	//ä½ç›¸ãƒã‚¹ã‚¯ã®é•·ã•
 	const double L = 30 * m;
-	//ˆÊ‘Šƒ}ƒXƒN‚Ì•
+	//ä½ç›¸ãƒã‚¹ã‚¯ã®å¹…
 	const double d = 585.5 * nano;
 	double dmin = 578.6 * nano;
 	double dmax = 592.3 * nano;
 	double interval = 0.25 * nano;
-	//FBG‚ÌƒZƒNƒVƒ‡ƒ“”
+	//FBGã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³æ•°
 	const int num =L*2/d;
 
-	//”g’·
+	//æ³¢é•·
 	double bragg = neff * d;
 
 	//-----------------------------------------------
-	//ƒxƒNƒgƒ‹‚ÅFBG‚ÌƒZƒNƒVƒ‡ƒ“•‚ğ’è‹`(Uniform‚Ì‚Æ‚«‚Ì‚İ)
+	//ãƒ™ã‚¯ãƒˆãƒ«ã§FBGã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³å¹…ã‚’å®šç¾©(Uniformã®ã¨ãã®ã¿)
 	//vector<double> fbgs(num,d/2);
 	//-----------------------------------------------
 
@@ -195,41 +195,41 @@ int main() {
 	//	dunique.at(i) = dmin + i * interval;
 	//}
 
-	////chirped‚Ìê‡‚ğì‚éB
-	double divide = 31;//divide‚ğ•Ï‚¦‚ê‚ÎFBG‚Ì’·‚³‚ª•Ï‚í‚éB
+	////chirpedã®å ´åˆã‚’ä½œã‚‹ã€‚
+	double divide = 31;//divideã‚’å¤‰ãˆã‚Œã°FBGã®é•·ã•ãŒå¤‰ã‚ã‚‹ã€‚
 
 	//vector<double> Cfbgs;
-	//‚Æ‚è‚ ‚¦‚¸ˆê‰ñ’ú‚ß‚Äˆê‰ñpython‚Åo—Í‚µ‚½ˆÊ‘Šƒ}ƒXƒN‚Ìƒpƒ^[ƒ“‚ğ‚±‚Á‚¿‚Å“Ç‚İ‚ñ‚Å‚â‚é‚±‚Æ‚É‚µ‚½B«
-	vector<double> chirpedfbg = readCSV("C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ƒ‚[ƒhŒ‹‡—˜_/PMhalfsec_divide31half.csv");
-	//ã‚Ìdivide‚Æˆê’v‚³‚¹‚éB
+	//ã¨ã‚Šã‚ãˆãšä¸€å›è«¦ã‚ã¦ä¸€å›pythonã§å‡ºåŠ›ã—ãŸä½ç›¸ãƒã‚¹ã‚¯ã®ãƒ‘ã‚¿ãƒ¼ãƒ³ã‚’ã“ã£ã¡ã§èª­ã¿è¾¼ã‚“ã§ã‚„ã‚‹ã“ã¨ã«ã—ãŸã€‚â†“
+	vector<double> chirpedfbg = readCSV("C:/Users/gakum/Box/Aokilab/Team_Folders/FBG2021/Python/ãƒ¢ãƒ¼ãƒ‰çµåˆç†è«–/PMhalfsec_divide31half.csv");
+	//ä¸Šã®divideã¨ä¸€è‡´ã•ã›ã‚‹ã€‚
 
-	//”g’·
+	//æ³¢é•·
 	double unitWL = 852.3 * nano;
 
-	//Å¬”g’·
+	//æœ€å°æ³¢é•·
 	double minwl = 839.5*nano;
-	//Å‘å”g’·
+	//æœ€å¤§æ³¢é•·
 	double mxwl = 863.5*nano;
-	//‰¡²—v‘f”
-	double xnum = 20;
-	//‰¡²(”g’·) 2ŸŒ³‚Ì”z—ñ‚ğì‚Á‚Ä‚¢‚­B
+	//æ¨ªè»¸è¦ç´ æ•°
+	double xnum = 2000;
+	//æ¨ªè»¸(æ³¢é•·) 2æ¬¡å…ƒã®é…åˆ—ã‚’ä½œã£ã¦ã„ãã€‚
 	vector<vector<double>> xywl(2,vector<double>(xnum));
-	//‚±‚±‚Å‰¡²ì‚é
+	//ã“ã“ã§æ¨ªè»¸ä½œã‚‹
 	double delta = (mxwl - minwl) / xnum;
 	//cout << delta << endl;
 	for (int j = 0; j < xywl.at(0).size(); j++) {
 		xywl.at(0).at(j) = minwl + j * delta;
 	}
-	//xywl.at(0)‚Å‰¡²‚ªæ‚ê‚éB
+	//xywl.at(0)ã§æ¨ªè»¸ãŒå–ã‚Œã‚‹ã€‚
 
-	//‹üÜ—¦•Ï’²—Ê(ˆê’è) •¡‘f”‚É‚µ‚Ä‚à‚æ‚¢‚¯‚ÇB
+	//å±ˆæŠ˜ç‡å¤‰èª¿é‡(ä¸€å®š) è¤‡ç´ æ•°ã«ã—ã¦ã‚‚ã‚ˆã„ã‘ã©ã€‚
 	double q0 = 3000;
 
 	for (int j = 0; j < xywl.at(0).size(); j++) {
 		xywl.at(1).at(j) = Refl(&xywl.at(0).at(j), &chirpedfbg, &q0);
 	}
 
-	////csv‚É‘‚«o‚µ
+	////csvã«æ›¸ãå‡ºã—
 	write(&xywl,&divide,&q0,&xnum);
 
 	cout << "done" << endl;
@@ -238,7 +238,7 @@ int main() {
 }
 
 
-//—v‘f”1000‚Å5•ªB
-//—v‘f”2000‚Å5•ª‚ÅI‚í‚Á‚Ä‚é‚È...‚È‚ñ‚Å‚¾B1000‚Ì‚Æ‚«‚Ì‘ª‚èŠÔˆá‚¢‚©A‚ ‚é‚¢‚Í©‘R‚É‘¬‚­‚È‚Á‚Ä‚¢‚é‚Ì‚©H
+//è¦ç´ æ•°1000ã§5åˆ†ã€‚
+//è¦ç´ æ•°2000ã§5åˆ†ã§çµ‚ã‚ã£ã¦ã‚‹ãª...ãªã‚“ã§ã ã€‚1000ã®ã¨ãã®æ¸¬ã‚Šé–“é•ã„ã‹ã€ã‚ã‚‹ã„ã¯è‡ªç„¶ã«é€Ÿããªã£ã¦ã„ã‚‹ã®ã‹ï¼Ÿ
 
 
